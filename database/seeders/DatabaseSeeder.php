@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Course;
+use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -23,26 +25,49 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $permitions = ['create-admin', 'lead-management'];
 
-        $user = new User();
+        foreach ($permitions as $permission) {
+             Permission::create(
+                ['name'=> $permission]
+            );
+        }
+         $this->createRoleAnduser('Super Admin','Super Admin','superadmin@lms.com');
+         $this->createRoleAnduser('Comunication','Comunication Team','comunication@lms.com');
+         $this->createRoleAnduser('Teacher','Teacher','teacher@lms.com');
+         $this->createRoleAnduser('Teacher','Teacher2','teacher2@lms.com');
+         $this->createRoleAnduser('Lead','Lead','lead@lms.com');
 
-        $user->name = 'Super Admin';
-        $user->email ='superadmin@example.com';
-        $user->password = bcrypt('superadmin');
-        $user->save();
+        Lead::factory(100)->create();
 
-
-        $role = Role::create([
-            'name' => 'Super Admin',
+        $course = Course::create([
+            'name' => 'Laravel Queues in Action',
+            'description' => 'Over the years, I worked on projects that heavily relied on asynchronous task execution (Vapor, Forge & Envoyer). I also worked with hundreds of Laravel community members to solve problems involving the queue system. Along the way, I contributed to enhancing the system by adding new features, fixing bugs, and improving performance.',
+            'image' => 'https://laravel-courses.com/storage/courses/4960c69f-174b-43d2-a868-d913de6678a9.png',
+            'price' => '39',
         ]);
+    }
 
-        $permitions = Permission::create(
-            ['name'=>'create-admin']
-        );
+    private function createRoleAnduser($type,$name,$email){
+       $role = Role::where('name',$type)->first();
 
-        $role->givePermissionTo($permitions);
-        $permitions->assignRole($role);
-
+        if (!$role){
+            $role = Role::create([
+                'name' => $type,
+            ]);
+        }
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => bcrypt('password'),
+        ]);
+        if($type == 'Super Admin'){
+            $role->givePermissionTo(Permission::all());
+        }
+        if($type == 'Lead'){
+            $role->givePermissionTo('lead-management');
+        }
         $user->assignRole($role);
+        return $user;
     }
 }

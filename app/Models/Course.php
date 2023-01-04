@@ -16,4 +16,10 @@ class Course extends Model
     public function e_class(){
         return $this->hasMany(EClass::class);
     }
+    public function teachers(){
+        return $this->belongsToMany(Teacher::class);
+    }
+    public function courses(){
+        return $this->belongsToMany(Course::class);
+    }
 }
