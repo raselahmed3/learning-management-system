@@ -34,6 +34,19 @@ return new class extends Migration
 
             $table->unique(['course_id','teacher_id']);
         });
+
+        Schema::create('course_student', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('student_id');
+            $table->timestamps();
+
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unique(['course_id','student_id']);
+        });
     }
 
     /**
@@ -44,5 +57,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('courses');
+        Schema::dropIfExists('course_teacher');
+        Schema::dropIfExists('course_student');
     }
 };
