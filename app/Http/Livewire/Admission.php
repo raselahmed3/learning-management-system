@@ -60,10 +60,10 @@ class Admission extends Component
 
         $invoiceItem->name = 'Course '.$this->selectedCourse->name;
         $invoiceItem->price = $this->selectedCourse->price;
-        $invoiceItem->quantify = 1;
+        $invoiceItem->quantity = 1;
         $invoiceItem->invoice_id = $invoice->id;
 
-        $invoice->save();
+        $invoiceItem->save();
 
 
         flash()->addSuccess('admission completed successfully');
