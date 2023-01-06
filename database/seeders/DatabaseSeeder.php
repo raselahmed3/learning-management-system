@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $permitions = ['create-admin', 'lead-management'];
+        $permitions = ['create-admin', 'lead-management','user-management'];
 
         foreach ($permitions as $permission) {
              Permission::create(
