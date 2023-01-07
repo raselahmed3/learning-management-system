@@ -17,9 +17,12 @@ class Course extends Model
         return $this->hasMany(EClass::class);
     }
     public function teachers(){
-        return $this->belongsToMany(Teacher::class);
+        return $this->belongsToMany(Course::class,'course_teacher','course_id','teacher_id');
     }
     public function courses(){
         return $this->belongsToMany(Course::class);
+    }
+    public function students(){
+        return $this->belongsToMany(Course::class,'course_student','course_id','student_id');
     }
 }

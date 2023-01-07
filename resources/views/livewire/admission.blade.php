@@ -31,9 +31,14 @@
                         @endforeach
                     </select>
                 </div>
-
                 @if (!empty($selectedCourse))
-                    <div class="text-lg text-gray-400 mt-4">Price: {{number_format($selectedCourse->price,2)}}</div>
+                   <div>
+                       <div class="text-lg text-gray-400 mt-4">Price: {{number_format($selectedCourse->price,2)}}</div>
+                       <div class="mt-4">
+                           <label for="default-payment" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Payment</label>
+                           <input type="number" id="default-payment" step="0.01" max="{{number_format($selectedCourse->price,2)}}" wire:model="payment" class="focus:outline-none border border-gray-300 rounded px-4" placeholder="Payment">
+                       </div>
+                   </div>
                     @include('components.form-submit-btn',[
                      'target' =>'admissionSubmit',
                     'class' => 'bg-blue-500',
