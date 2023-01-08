@@ -17,7 +17,7 @@ class Course extends Model
         return $this->hasMany(EClass::class);
     }
     public function teachers(){
-        return $this->belongsToMany(Course::class,'course_teacher','course_id','teacher_id');
+        return $this->belongsToMany(User::class,'course_teacher','course_id','teacher_id');
     }
     public function courses(){
         return $this->belongsToMany(Course::class);
