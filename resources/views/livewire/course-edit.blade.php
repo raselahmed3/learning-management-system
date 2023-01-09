@@ -2,14 +2,22 @@
     <form class="p-4" wire:submit.prevent="courseEdit">
         <div class="flex w-full">
             @include('components.input-form',['name'=>'course_name','type'=>'text','label' => 'Name', 'placeholder'=>'Course Name'])
-            @include('components.input-form',['name'=>'course_image','type'=>'text','label' => 'Image', 'placeholder'=>'image url'])
             @include('components.input-form',['name'=>'price','type'=>'number','label' => 'Price', 'placeholder'=>'Amount'])
         </div>
         <div class="w-full mt-8">
             @include('components.input-form',['name'=>'description','type'=>'textarea','label' => 'Description', 'placeholder'=>'Description'])
         </div>
 
-
+        <div class="min-w-max inline-block mt-4 mx-3">
+            <h3 class="text-gray-600">Image</h3>
+            <div class="flex gap-4">
+                <input type="file" wire:model="course_image" id="course_image"  class="lms-input" />
+                <img class="w-20" src="{{asset($deleteImage)}}" />
+            </div>
+            @error('course_image')
+            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{$message}}</p>
+            @enderror
+        </div>
         <h3 class="text-gray-600 mt-4 ml-3">Select Days</h3>
         <div class="w-full ml-3 mt-4 flex justify-between items-center gap-4">
             @foreach($days as $day)

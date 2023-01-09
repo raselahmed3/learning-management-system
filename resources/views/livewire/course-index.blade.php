@@ -58,7 +58,7 @@
                 <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
                     <td class="p-2 border-r text-left px-4">{{$course->id}}</td>
                     <td class="p-2 border-r text-center px-4">
-                        <img class="w-32 mx-auto" src="{{$course->image}}" alt="">
+                        <img class="w-32 mx-auto" src="{{ asset($course->image) }}" alt="">
                     </td>
                     <td class="p-2 border-r text-left px-4">{{$course->name}}</td>
                     <td class="p-2 border-r text-left px-4">${{$course->price}}</td>

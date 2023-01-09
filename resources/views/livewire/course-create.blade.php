@@ -2,7 +2,7 @@
     <form class="p-4" wire:submit.prevent="courseCreate">
         <div class="flex w-full">
             @include('components.input-form',['name'=>'course_name','type'=>'text','label' => 'Name', 'placeholder'=>'Course Name'])
-            @include('components.input-form',['name'=>'course_image','type'=>'text','label' => 'Image', 'placeholder'=>'image url'])
+            @include('components.input-form',['name'=>'course_image','type'=>'file','label' => 'Image', 'placeholder'=>'image'])
             @include('components.input-form',['name'=>'price','type'=>'number','label' => 'Price', 'placeholder'=>'Amount'])
         </div>
         <div class="w-full mt-8">

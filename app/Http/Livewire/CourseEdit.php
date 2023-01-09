@@ -8,10 +8,13 @@ use App\Models\User;
 use DateInterval;
 use DatePeriod;
 use DateTime;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CourseEdit extends Component
 {
+    use WithFileUploads;
     public $days = [
         'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
     ];
@@ -24,6 +27,7 @@ class CourseEdit extends Component
     public $selectedTeachers = [];
     public $duration;
     public $end_date;
+    public $deleteImage;
 
 
 
@@ -32,7 +36,8 @@ class CourseEdit extends Component
         $course = Course::findOrFail($this->course_id);
         $this->course_name = $course->name;
         $this->course_image = $course->image;
-        $this->price = $course->price;
+        $this->deleteImage= $course->image;
+        $this->price =  $course->price;
         $this->description = $course->description;
        $this->selectedTeachers = $course->teachers()->pluck('users.id')->toArray();
 
@@ -51,13 +56,18 @@ class CourseEdit extends Component
     }
 
     public function courseEdit(){
+        $this->validate();
+        $filename = time().$this->course_image->getClientOriginalName();
+        $path = $this->course_image->storeAs('photos',$filename, 'public');
         $course = Course::findOrFail($this->course_id);
         $course->name = $this->course_name;
         $course->description = $this->description;
-        $course->image = $this->course_image;
+        $course->image = $path;
         $course->price = $this->price;
         $course->save();
-
+        if (!empty($this->deleteImage)){
+            Storage::delete('public/'.$this->deleteImage);
+        }
         $course->teachers()->sync($this->selectedTeachers);
 
         if (!empty($this->selectedDays) && !empty($this->end_date && $this->duration)){

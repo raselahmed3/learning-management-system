@@ -9,10 +9,14 @@ use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
 use DateTime;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+
 
 class CourseCreate extends Component
 {
+    use WithFileUploads;
     public $days = [
         'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
     ];
@@ -33,7 +37,7 @@ class CourseCreate extends Component
 
     protected $rules = [
         'course_name' => 'required|unique:courses,name',
-        'course_image' => 'required',
+        'course_image' => 'required|image',
         'price' => 'required',
         'description' => 'required|min:150',
         'selectedDays' => 'required',
@@ -44,10 +48,12 @@ class CourseCreate extends Component
     public function courseCreate(){
 
         $this->validate();
+        $filename = time().$this->course_image->getClientOriginalName();
+        $path = $this->course_image->storeAs('photos',$filename, 'public');
         $course = new Course();
         $course->name = $this->course_name;
         $course->description = $this->description;
-        $course->image = $this->course_image;
+        $course->image = $path;
         $course->price = $this->price;
         $course->save();
 

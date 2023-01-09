@@ -1,6 +1,6 @@
 <div class="flex justify-center">
     <div class="rounded-sm shadow-sm bg-white pb-3">
-        <img class="h-40" src="{{$course->image}}">
+        <img class="h-40" src="{{asset($course->image)}}">
 
         <div class="mt-4">
             <div class="flex">
