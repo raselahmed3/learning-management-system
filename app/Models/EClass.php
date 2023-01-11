@@ -8,15 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class EClass extends Model
 {
     use HasFactory;
-    public function notes(){
-        $this->hasMany(Note::class);
-    }
 
     public function homework(){
-        $this->hasMany(Homework::class);
+        return  $this->hasMany(Homework::class);
     }
 
     public function attendences(){
-        $this->hasMany(Attendance::class);
+        return  $this->hasMany(Attendance::class);
+    }
+    public function notes(){
+        return  $this->belongsToMany(Note::class,'class_note','note_id','class_id');
+    }
+
+    public function course(){
+      return  $this->belongsTo(Course::class,'course_id');
     }
 }

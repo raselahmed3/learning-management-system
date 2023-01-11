@@ -48,10 +48,12 @@ class EditLead extends Component
     public function addNote()
     {
         $note = new Note();
+        $lead = Lead::findOrFail($this->lead_id);
 
         $note->description = $this->note;
-        $note->lead_id = $this->lead_id;
         $note->save();
+        $lead->notes()->attach($note->id);
+
 
         $this->note = '';
 

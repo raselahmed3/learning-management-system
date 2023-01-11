@@ -67,7 +67,7 @@ class CourseCreate extends Component
                 if($date->format("l") == $slelectedDay){
                     $classNum++;
                     $eClass = new EClass();
-                    $eClass->number = $classNum;
+                    $eClass->name = $course->name;
                     $eClass->class_date = $date;
                     $eClass->class_duration = $this->duration;
                     $eClass->course_id = $course->id;

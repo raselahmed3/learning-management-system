@@ -51,6 +51,14 @@
                     </th>
                     <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                         <div class="flex items-center justify-center">
+                           Name
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                            </svg>
+                        </div>
+                    </th>
+                    <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                        <div class="flex items-center justify-center">
                             Date
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
@@ -59,7 +67,15 @@
                     </th>
                     <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                         <div class="flex items-center justify-center">
-                            Start Time
+                           Class Time
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                            </svg>
+                        </div>
+                    </th>
+                    <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                        <div class="flex items-center justify-center">
+                           Actions
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                             </svg>
@@ -74,13 +90,23 @@
                 @foreach($allCass as $class)
                     <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
                         <td class="p-2 border-r text-left px-4">Class-{{$i++}}</td>
+                        <td class="p-2 border-r text-left px-4">{{$class->name}}</td>
                         <td class="p-2 border-r text-center px-4">
                            {{date('l,F j,Y',strtotime($class->class_date))}}
                         </td>
                         <td class="p-2 border-r text-center px-4">
                             {{date('H:i A',strtotime($class->class_duration))}}
                         </td>
-                    </tr>
+                        <td class="p-2 border-r text-left px-4">
+                            <div class="flex">
+                                <a href="{{route('class.edit',$class->id)}}" class="bg-blue-500 p-2 inline-block text-white hover:shadow-lg text-xs font-thin">@include('components.icons.edit')</a>
+                                <a href="{{route('class.show',$class->id)}}" class="bg-green-500 p-2 mx-3 inline-block text-white hover:shadow-lg text-xs font-thin">@include('components.icons.eye')</a>
+                                <form wire:submit.prevent="classDelete({{$class->id}})" class="bg-red-500 p-2 inline-block text-white hover:shadow-lg text-xs font-thin">
+                                    <button onclick="return confirm('you are sure to delete!')" type="submit">@include('components.icons.trash')</button>
+                                </form>
+                            </div>
+                        </td>
+                     </tr>
                 @endforeach
                 </tbody>
             </table>

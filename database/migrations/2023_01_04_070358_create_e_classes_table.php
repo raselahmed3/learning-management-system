@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('e_classes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('number');
+            $table->string('name');
             $table->dateTime('class_date');
             $table->time('class_duration');
             $table->unsignedBigInteger('course_id');
