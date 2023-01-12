@@ -35,7 +35,6 @@ class CourseEdit extends Component
 
         $course = Course::findOrFail($this->course_id);
         $this->course_name = $course->name;
-        $this->course_image = $course->image;
         $this->deleteImage= $course->image;
         $this->price =  $course->price;
         $this->description = $course->description;
@@ -44,7 +43,6 @@ class CourseEdit extends Component
     }
     protected $rules = [
         'course_name' => 'required',
-        'course_image' => 'required',
         'price' => 'required',
         'description' => 'required|min:150',
         'selectedTeachers' => 'required',
@@ -57,12 +55,16 @@ class CourseEdit extends Component
 
     public function courseEdit(){
         $this->validate();
-        $filename = time().$this->course_image->getClientOriginalName();
-        $path = $this->course_image->storeAs('photos',$filename, 'public');
+       if (!empty($this->course_image)){
+           $filename = time().$this->course_image->getClientOriginalName();
+           $path = $this->course_image->storeAs('photos',$filename, 'public');
+       }
         $course = Course::findOrFail($this->course_id);
         $course->name = $this->course_name;
         $course->description = $this->description;
-        $course->image = $path;
+        if (isset($path)){
+            $course->image = $path;
+        }
         $course->price = $this->price;
         $course->save();
         if (!empty($this->deleteImage)){

@@ -17,7 +17,7 @@ class EClass extends Model
         return  $this->hasMany(Attendance::class);
     }
     public function notes(){
-        return  $this->belongsToMany(Note::class,'class_note','note_id','class_id');
+        return  $this->belongsToMany(Note::class,'class_note','class_id','note_id');
     }
 
     public function course(){

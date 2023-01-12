@@ -24,6 +24,8 @@ class ClassShow extends Component
         $note = new Note();
         $class = EClass::findOrFail($this->class_id);
 
+
+       // dd($class->id);
         $note->description = $this->note;
         $note->save();
         $class->notes()->attach($note->id);
