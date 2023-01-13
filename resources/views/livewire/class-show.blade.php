@@ -35,8 +35,10 @@
         <p class="py-2 text-gray-600"><span>Name: </span>{{$class->name}}</p>
         <p class="py-2 text-gray-600"><span>Date: </span> {{date('l,F j,Y',strtotime($class->class_date))}}</p>
         <p class="py-2 text-gray-600"><span>Class Time: </span>{{date('H:i A',strtotime($class->class_duration))}}</p>
-
-        <h3 class="text-lg py-4">Students</h3>
+       <div class="flex justify-between items-center">
+           <h3 class="text-lg py-4">Students</h3>
+           <p class="flex items-center gap-4">Present <span class="w-8 h-8 flex items-center justify-center bg-green-600 text-white radius-full py-2 px-2">{{$class->attendenceCount()}}</span> Absent <span class="w-8 flex items-center justify-center h-8 bg-red-600 text-white radius-full">{{$class->course->students()->count() - $class->attendenceCount()}}</span></p>
+       </div>
         <div class="table w-full">
             <table class="w-full border">
                 <thead>
@@ -79,8 +81,14 @@
                         </td>
                         <td class="p-2 border-r text-left px-4">
                             <div class="flex justify-center gap-4 items-center">
-                                <a href="" class="bg-green-500 text-white py-2 px-4 rounded">Present</a>
-                                <a href="" class="bg-red-500 text-white py-2 px-4 rounded">Absent</a>
+                                @if ($student->is_present($class->id))
+                                   <p class="py-2 px-4 rounded  text-white bg-green-600 flex items-center justify-center gap-2">Presented  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                       </svg></p>
+
+                                @else
+                                    <button wire:click="attendence({{$student->id}})" class="border  text-gray-600 border-green-600 py-2 px-4 rounded">Present</button>
+                                @endif
                             </div>
                         </td>
                     </tr>

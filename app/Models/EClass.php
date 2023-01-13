@@ -23,4 +23,8 @@ class EClass extends Model
     public function course(){
       return  $this->belongsTo(Course::class,'course_id');
     }
+
+    public function attendenceCount(){
+        return Attendence::where('class_id',$this->id)->count();
+    }
 }

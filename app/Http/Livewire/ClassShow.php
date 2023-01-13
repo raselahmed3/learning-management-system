@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Attendence;
 use App\Models\EClass;
 use App\Models\Note;
 use Livewire\Component;
@@ -35,5 +36,14 @@ class ClassShow extends Component
 
         flash()->addSuccess('Note added successfully!');
 
+    }
+    public function attendence($student_id) {
+        $attendce = new Attendence();
+
+        $attendce->class_id = $this->class_id;
+        $attendce->user_id = $student_id;
+        $attendce->save();
+
+        flash()->addSuccess('Presentation successfully!');
     }
 }
