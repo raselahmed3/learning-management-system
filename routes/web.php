@@ -5,6 +5,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EClassController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuastionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admission', [AdmissionController::class, 'admission'])->name('admission');
     Route::get('/invoice',[InvoiceController::class, 'index'])->name('invoice-index');
     Route::get('/invoice-show/{ids}',[InvoiceController::class, 'show'])->name('invoice-show');
+    Route::resource('/question',QuastionController::class);
+    Route::resource('/quiz',QuizController::class);
 });
 
 require __DIR__.'/auth.php';
