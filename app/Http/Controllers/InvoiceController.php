@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Invoice;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
@@ -55,5 +57,11 @@ class InvoiceController extends Controller
 //        return $invoice->stream();
 
         return view('invoice.show',['id'=>$id]);
+    }
+
+    public function invoiceDownload($id){
+        $invoice = Invoice::findOrFail($id)->toArray();
+        $pdf = Pdf::loadView('invoice.show', $invoice);
+        return $pdf->download('invoice.pdf');
     }
 }

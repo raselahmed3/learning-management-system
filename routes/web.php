@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/class',EClassController::class);
     Route::get('/admission', [AdmissionController::class, 'admission'])->name('admission');
     Route::get('/invoice',[InvoiceController::class, 'index'])->name('invoice-index');
-    Route::get('/invoice-show/{ids}',[InvoiceController::class, 'show'])->name('invoice-show');
+    Route::get('/invoice-show/{id}',[InvoiceController::class, 'show'])->name('invoice-show');
+    Route::get('/invoice-download/{id}',[InvoiceController::class, 'invoiceDownload'])->name('invoice-download');
     Route::resource('/question',QuastionController::class);
     Route::resource('/quiz',QuizController::class);
 });
