@@ -60,8 +60,15 @@ class InvoiceController extends Controller
     }
 
     public function invoiceDownload($id){
-        $invoice = Invoice::findOrFail($id)->toArray();
-        $pdf = Pdf::loadView('invoice.show', $invoice);
+        $invoiceMain = Invoice::with(['user','invoiceItems','payments'])->findOrFail($id);
+
+        $invoice = $invoiceMain->toArray();
+        $invoice['total'] = $invoiceMain->amount()['amount'];
+        $invoice['paid'] = $invoiceMain->amount()['paid'];
+        $invoice['due'] = $invoiceMain->amount()['due'];
+        //return var_dump($invoice);
+        $pdf = Pdf::loadView('invoice.invoice-pdf',  compact('invoice'));
         return $pdf->download('invoice.pdf');
+
     }
 }
